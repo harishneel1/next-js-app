@@ -1,0 +1,48 @@
+name: Iteration   # specify what this yml file is going to denote
+
+on:
+  push:
+    branches: [ "main" ]  # whenever there is push or merge happening to main branch we still have to trigger those jobs  
+  pull_request:
+    branches: [ "main" ]  # The target branch is "main"
+
+jobs:
+  build:  # you can name any name like build
+    runs-on: ubuntu-latest  # specifying which particular machine should GitHub use in their server
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]  # Run all these jobs on Node.js 18, 20, and 22
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v4  # Checkout to the current branch
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4  # Setting up Node.js environment
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'  # npm is used to cache dependencies
+      - name: Install Dependencies
+        run: npm install  # Install all dependencies from package.json
+      - name: Build
+        run: npm run build  # Build the source code
+
+  unit_testing:  # Renamed to avoid space in job name
+    runs-on: ubuntu-latest  # we want to run on a particular server
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v4  # Checkout to the current branch
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Install Dependencies
+        run: npm install  # Corrected typo
+      - name: Run Tests
+        run: npm run test  # Run the tests defined in package.json
