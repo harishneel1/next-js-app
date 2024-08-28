@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Build Docker image
-      run: docker build . -t harishneel/next-js-app
+      run: docker build . -t dinesh0724/next-js-app
 
     - name: Log in to Docker Hub
       env:
@@ -23,4 +23,4 @@ jobs:
         echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
 
     - name: Push Docker image to Docker Hub
-      run: docker push harishneel/next-js-app:latest
+      run: docker push dinesh0724/next-js-app:latest
