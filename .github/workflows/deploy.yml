@@ -7,12 +7,20 @@ on:
 
 jobs:
   deploy:
-
     runs-on: ubuntu-latest
-
 
     steps:
     - uses: actions/checkout@v4
-    - run: docker build . -t harishneel/next-js-app
-    - run: echo "${{secrets.DOCKERHUB_PASSWORD}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin 
-    - run: docker push harishneel/next-js-app:latest
+
+    - name: Build Docker image
+      run: docker build . -t dinesh0724/next-js-app
+
+    - name: Log in to Docker Hub
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      run: |
+        echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+
+    - name: Push Docker image to Docker Hub
+      run: docker push dinesh0724/next-js-app:latest

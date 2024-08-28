@@ -3,7 +3,7 @@ name: Integration
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "job" ]
   pull_request:
     branches: [ "main" ]
 
