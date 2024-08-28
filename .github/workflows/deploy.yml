@@ -17,9 +17,10 @@ jobs:
 
     - name: Log in to Docker Hub
       env:
-        DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-      run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      run: |
+        echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
 
     - name: Push Docker image to Docker Hub
       run: docker push harishneel/next-js-app:latest
