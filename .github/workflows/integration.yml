@@ -4,7 +4,7 @@ on:
   push:
     branches: ["main"]
   pull_request:
-    branches: ["main"]b
+    branches: ["main"]
 
 jobs:
   build:
@@ -14,17 +14,18 @@ jobs:
       matrix:
         node-version: [18.x, 20.x, 22.x]
 
-   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: "Installing Dependencies"
+        run: npm i
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    -run: npm ci
-    -run: npm run build 
+      - name: "Build command"
+        run: npm run build
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -33,18 +34,15 @@ jobs:
       matrix:
         node-version: [18.x, 20.x, 22.x]
 
-   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: "Installing Dependencies"
+        run: npm i
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: "Installing dependecies Test Cases"
-      run: npm i 
-    - name: "Running Unit Tests"
-      run: npm run test
-    
- 
+      - name: "Running test cases"
+        run: npm run test
