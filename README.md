@@ -1,4 +1,4 @@
-# Next.js + Jest
+# Next.js + Jest "PPP"
 
 This example shows how to configure Jest to work with Next.js.
 
