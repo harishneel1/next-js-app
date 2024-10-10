@@ -1,0 +1,30 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+        
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Login to Docker Hub
+      run: echo "${{secrets.DOCKERHUB_PASSWORD}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin 
+
+    - name: Build Docker image
+      run: docker build . -t arshaanarul/next-js-app
+    
+    - name: Push Docker image
+      run: docker push ${{secrets.DOCKERHUB_USERNAME}}/next-js-app:latest
+
+
+
+
+
+
