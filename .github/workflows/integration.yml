@@ -1,14 +1,15 @@
 
 name: Integration
 
-on:
+on:                     # On which event this request should run
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
-jobs:
-  build:
+jobs:    
+ #Job for building the project
+  build:                 #Job name
 
     runs-on: ubuntu-latest
 
@@ -18,7 +19,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node-version }}          # We are telling to setup nodejs before building the project, as this is nodejs project
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
@@ -29,7 +30,9 @@ jobs:
     - name: "Build command"
       run: npm run build
 
-  unit-tests:
+# Job for running tests
+
+  unit-tests:                        #job name
 
     runs-on: ubuntu-latest
 
