@@ -1,0 +1,62 @@
+#check 1. buils is succesfull 2. All tests passes
+name: Integration  # what is yml file going to denote
+
+
+on: #when we merging(on pull request) the branches to the main, the run particular jobs that are given below
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest #all these jobs are run on github servers so we have to spacify which machine(OS) git hub use in there servers
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+       
+
+  #below are the importang task , these tak github has to to compelte the particular task
+    steps:
+    - uses: actions/checkout@v4 #tells github to cheackout current branch(that we are currently working on ), by deafult its on main branch 
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4 #it tells github to set up  node environment , before  doing anything
+      with:
+        node-version: ${{ matrix.node-version }} #we need a sereral node versions, and above strategy bock is related to it and it says that run this command on node js version  18 , 20 and 22
+        cache: 'npm' #it is used to handle all the packages
+    # - run: npm ci
+    # - run: npm run build --if-present
+    # - run: npm test
+    - name: "Installing Dependencies"
+      run: npm i # Dependency Installation
+
+    - name: "Build command"
+      run: npm run build
+
+  unit-tests:
+
+    runs-on: ubuntu-latest #all these jobs are run on github servers so we have to spacify which machine(OS) git hub use in there servers
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+       
+
+  #below are the importang task , these tak github has to to compelte the particular task
+    steps:
+    - uses: actions/checkout@v4 #tells github to cheackout current branch(that we are currently working on ), by deafult its on main branch 
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4 #it tells github to set up  node environment , before  doing anything
+      with:
+        node-version: ${{ matrix.node-version }} #we need a sereral node versions, and above strategy bock is related to it and it says that run this command on node js version  18 , 20 and 22
+        cache: 'npm' #it is used to handle all the packages
+    # - run: npm ci
+    # - run: npm run build --if-present
+    # - run: npm test
+    - name: "Installing Dependencies"
+      run: npm i # Dependency Installation
+
+    - name: "Running test cases"
+      run: npm run test
