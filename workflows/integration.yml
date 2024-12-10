@@ -1,0 +1,66 @@
+#name of the yamal file
+name: Integration
+
+on:
+  push:
+    branches: [ "main" ]
+  #on every pull request- as the target branch is main, we will run the below jobs
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+#check for the build to be successful
+  build:
+    #all of these jobs runs on the github servers
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    #steps github have to do inorder to execute the jobs
+    steps:
+    #checkout to the current branch, by defult it will be at main branch
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+    #to setup the node enviornment
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        #to handel our packages
+        cache: 'npm'
+
+     #to install all the dependencies
+    - name: "Installing Dependencies" 
+      run: npm i
+
+    - name: "Build Command"
+      run: npm run build
+  
+  unit-test:
+  runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    #steps github have to do inorder to execute the jobs
+    steps:
+    #checkout to the current branch, by defult it will be at main branch
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+    #to setup the node enviornment
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        #to handel our packages
+        cache: 'npm'
+        
+     #to install all the dependencies
+    - name: "Installing Dependencies" 
+      run: npm i
+
+    - name: "Running test cases"
+      run: npm run test
+  
