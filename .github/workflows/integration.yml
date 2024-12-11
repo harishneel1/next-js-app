@@ -1,21 +1,34 @@
+<<<<<<< Updated upstream
 
+=======
+#yamal file called as
+>>>>>>> Stashed changes
 name: Integration
 
 on:
   push:
     branches: [ "main" ]
+<<<<<<< Updated upstream
+=======
+    #on a pull request event the target branch is main, we have to run the job
+>>>>>>> Stashed changes
   pull_request:
     branches: [ "main" ]
 
 jobs:
   build:
+<<<<<<< Updated upstream
 
+=======
+    #jobs runs on the github servers
+>>>>>>> Stashed changes
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
 
+<<<<<<< Updated upstream
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
@@ -31,12 +44,35 @@ jobs:
 
   unit-tests:
 
+=======
+    #steps to complete the job
+    steps:
+    #tells github to checkout to the current branch
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+    #setting up the node enviornment
+      uses: actions/setup-node@v4
+      with:
+        #different node versions
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+ 
+    - name: "Installing Dependencies"
+      run: npm i
+
+    - name: "Build Command"
+      run: npm run build
+
+  unit-tests:
+    #jobs runs on the github servers
+>>>>>>> Stashed changes
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
 
+<<<<<<< Updated upstream
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
@@ -44,8 +80,26 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+=======
+    #steps to complete the job
+    steps:
+    #tells github to checkout to the current branch
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+    #setting up the node enviornment
+      uses: actions/setup-node@v4
+      with:
+        #different node versions
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+ 
+>>>>>>> Stashed changes
     - name: "Installing Dependencies"
       run: npm i
 
     - name: "Running test cases"
+<<<<<<< Updated upstream
       run: npm run test
+=======
+      run: npm run test
+>>>>>>> Stashed changes
