@@ -1,0 +1,68 @@
+# name of the file
+name: Integration
+
+on:
+  push:
+    branches: [ "main" ]
+     #on the pull request event as the target branch is main, run the below defined jobs
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # job1 - build
+  build:
+    # github server on which the jobs will be running
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # the version of node that can be executable
+        node-version: [18.x, 20.x, 22.x]
+
+    # steps that GitHub has to do to complete the job
+    steps:
+      # checkout to the current branch
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        # setting up the node environment
+        uses: actions/setup-node@v4
+        with:
+          # the versions to be set up are
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: "Installing Dependencies"
+        run: npm i
+
+      - name: "Build command"
+        run: npm run build
+
+  # job2 - Unit Test
+  unit-tests:
+    # github server on which the jobs will be running
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # test cases to be run and passed onto these versions of node
+        node-version: [18.x, 20.x, 22.x]
+
+    # steps that GitHub has to do to complete the job
+    steps:
+      # checkout to the current branch
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        # setting up the node environment
+        uses: actions/setup-node@v4
+        with:
+          # the versions to be set up are
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: "Installing Dependencies"
+        run: npm i
+
+      - name: "Running Test Cases"
+        run: npm run test
