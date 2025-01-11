@@ -19,14 +19,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: "Installing Dependencies"
+
+    - name: "Installing dependencies"
       run: npm i
 
-    - name: "Build command"
+    - name: "Build command" 
       run: npm run build
 
   unit-tests:
@@ -40,12 +41,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: "Installing Dependencies"
+
+    - name: "Installing dependencies"
       run: npm i
 
-    - name: "Running test cases"
+    - name: "Running test cases" 
       run: npm run test
