@@ -3,9 +3,21 @@
 This example shows how to configure Jest to work with Next.js.
 
 This includes Next.js' built-in support for Global CSS, CSS Modules and TypeScript. This example also shows how to use Jest with the App Router and React Server Components.
-git add .
-git commit -m "fix: suppression des commandes git dans le README"
-git push origin main
+Cliquez sur Settings (en haut à droite).
+
+Dans le menu de gauche, descendez jusqu'à Secrets and variables > Actions.
+
+Cliquez sur New repository secret (Nouveau secret de dépôt).
+
+Créez deux secrets :
+
+Secret 1 :
+
+Name : DOCKERHUB_USERNAME
+
+Secret : bahaj (votre nom d'utilisateur Docker Hub)
+
+
 
 > **Note:** Since tests can be co-located alongside other files inside the App Router, we have placed those tests in `app/` to demonstrate this behavior (which is different than `pages/`). You can still place all tests in `__tests__` if you prefer.
 
